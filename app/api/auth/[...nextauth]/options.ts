@@ -42,16 +42,11 @@ const options: NextAuthOptions = {
     },
     async jwt({ user, token }) {
       if (user) {
-        try {
-          const userInfo = await axios
-            .get(`http://localhost:3001/get-user/${user.email}`)
-            .then((res) => res.data[0]);
-          token.role = userInfo.role;
-          token.id = userInfo.id;
-        } catch (error) {
-          console.error("Error in jwt callback:", error);
-          token.role = "member";
-        }
+        const userInfo = await axios
+          .get(`http://localhost:3001/get-user/${token.email}`)
+          .then((res) => res.data[0]);
+        token.role = userInfo?.role;
+        token.id = userInfo?.id;
       }
       return token;
     },

@@ -15,3 +15,7 @@ export type Books = {
   published_year: number;
   title: string;
 };
+
+export type AdminDataProps = {
+  children: React.ReactNode;
+};

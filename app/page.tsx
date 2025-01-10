@@ -1,15 +1,11 @@
 import Image from "next/image";
-import { Outfit, Afacad_Flux } from "next/font/google";
-import handBook from "../public/Images/HandBook.png";
 import Books from "../public/Images/Books.png";
+import handBook from "../public/Images/HandBook.png";
 import Update from "../public/Images/update.png";
-
-const afacad_Flux = Afacad_Flux({ subsets: ["latin"] });
-const outfit = Outfit({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className={`${outfit.className}`}>
+    <div>
       <div className="px-5 py-3">
         <div className="bg-[#8EB486] h-96 w-full md:p-10 p-5 rounded-2xl flex">
           <div className="flex-2">
