@@ -8,7 +8,7 @@ const AdminPage = ({ children }: AdminDataProps) => {
   return (
     <div className="px-5">
       <div className="bg-white p-5 shadow-md shadow-purple-200/50 rounded-xl  flex">
-        <div className="card w-72 bg-[#8EB486] p-5 shadow-md shadow-purple-200/50 rounded-xl border-2 border-[#8EB486]">
+        <div className="card w-72 bg-primary p-5 shadow-md shadow-purple-200/50 rounded-xl border-2 border-primary">
           <ul className="w-full flex flex-col gap-2">
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link

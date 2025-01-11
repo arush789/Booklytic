@@ -16,6 +16,23 @@ export type Books = {
   title: string;
 };
 
+export type BooksCardProps = {
+  book: Books;
+  handleMouseLeave: (bookId: number) => void;
+  handleMouseMove: (
+    e: React.MouseEvent<HTMLDivElement>,
+    bookId: number
+  ) => void;
+  hoverStyles: {
+    [key: number]: React.CSSProperties;
+  };
+};
+
 export type AdminDataProps = {
   children: React.ReactNode;
+};
+
+export type Error = {
+  error: string;
+  status: number;
 };
