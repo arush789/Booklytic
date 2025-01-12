@@ -13,7 +13,7 @@ const AdminPage = ({ children }: AdminDataProps) => {
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link
                 href={"/admin/dashboard"}
-                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner focus:bg-gradient-to-r from-white to-white focus:text-black text-gray-700 transition-all ease-linear"
+                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner  focus:text-black text-gray-700 transition-all ease-linear"
               >
                 <MdSpaceDashboard className="size-7" />
                 Dashboard
@@ -22,7 +22,7 @@ const AdminPage = ({ children }: AdminDataProps) => {
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link
                 href={"/admin/create"}
-                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner focus:bg-gradient-to-r from-white to-white focus:text-black text-gray-700 transition-all ease-linear"
+                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner   focus:text-black text-gray-700 transition-all ease-linear"
               >
                 <CiCirclePlus className="size-7" />
                 Create User
@@ -31,7 +31,7 @@ const AdminPage = ({ children }: AdminDataProps) => {
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link
                 href={"/admin/booksManage"}
-                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner focus:bg-gradient-to-r from-white to-white focus:text-black text-gray-700 transition-all ease-linear"
+                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner   focus:text-black text-gray-700 transition-all ease-linear"
               >
                 <ImBooks className="size-7" />
                 Books

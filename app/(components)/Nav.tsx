@@ -7,6 +7,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { GoHome } from "react-icons/go";
+import { ImBooks } from "react-icons/im";
+import { MdOutlineSupportAgent } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
 
 const afacad_Flux = Afacad_Flux({ subsets: ["latin"] });
 const Nav = () => {
@@ -25,8 +29,6 @@ const Nav = () => {
     );
   }
 
-  // console.log(session?.user);
-
   return (
     <>
       <div
@@ -39,7 +41,7 @@ const Nav = () => {
         </div>
 
         <div className="justify-center flex h-full items-center flex-1 pr-10">
-          <ul className="flex space-x-10">
+          {/* <ul className="flex space-x-10">
             <li className="relative cursor-pointer group text-xl text-black">
               <Link href={"/"}>
                 Home
@@ -78,7 +80,54 @@ const Nav = () => {
                 </Link>
               </li>
             )}
-          </ul>
+          </ul> */}
+          <div>
+            <div className="py-3 px-2 flex gap-1">
+              <div className="group relative px-3 cursor-pointer">
+                <Link href="/">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                    <GoHome size={24} color="black" />
+                  </div>
+                  <p className="absolute -bottom-12 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xl text-black font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                    Home
+                  </p>
+                </Link>
+              </div>
+
+              <div className="group relative px-3 cursor-pointer">
+                <Link href="/books">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                    <ImBooks size={24} color="black" />
+                  </div>
+                  <p className="absolute -bottom-12 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xl text-black font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                    Books
+                  </p>
+                </Link>
+              </div>
+
+              <div className="group relative px-3 cursor-pointer">
+                <Link href="/support">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                    <MdOutlineSupportAgent size={24} color="black" />
+                  </div>
+                  <p className="absolute -bottom-12 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xl text-black font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                    Support
+                  </p>
+                </Link>
+              </div>
+
+              <div className="group relative px-3 cursor-pointer">
+                <Link href="/admin">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                    <RiAdminFill size={24} color="black" />
+                  </div>
+                  <p className="absolute -bottom-12 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xl text-black font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                    Admin
+                  </p>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-end  gap-x-2">

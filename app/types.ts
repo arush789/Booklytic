@@ -18,7 +18,10 @@ export type Books = {
 
 export type BooksCardProps = {
   book: Books;
-  handleMouseLeave: (bookId: number) => void;
+  handleMouseLeave: (
+    e: React.MouseEvent<HTMLDivElement>,
+    bookId: number
+  ) => void;
   handleMouseMove: (
     e: React.MouseEvent<HTMLDivElement>,
     bookId: number
@@ -26,6 +29,7 @@ export type BooksCardProps = {
   hoverStyles: {
     [key: number]: React.CSSProperties;
   };
+  setSelectedBook: (book: Books) => void;
 };
 
 export type AdminDataProps = {

@@ -24,13 +24,63 @@ const Pagination: React.FC<PaginationProps> = ({
     }
   };
 
+  const handlePage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const getPageRange = (pageNumber: number) => {
+    return pageNumber >= 1 && pageNumber <= maxPage ? pageNumber : null;
+  };
+
   return (
-    <div className="flex gap-2 justify-center mt-4">
-      <button onClick={handlePageMinus} className="text-primary">
+    <div className="flex gap-2 justify-center pb-10 pt-4">
+      <button
+        onClick={handlePageMinus}
+        className="text-primary"
+        disabled={currentPage === 1}
+      >
         <IoIosArrowBack />
       </button>
-      <h1 className="px-4 py-2 bg-primary rounded-full ">{currentPage}</h1>
-      <button onClick={handlePagePlus} className="text-primary">
+      {getPageRange(currentPage - 2) && (
+        <button
+          className={` bg-primary opacity-50 text-white px-4 py-2 rounded-full`}
+          onClick={() => handlePage(currentPage - 2)}
+        >
+          {currentPage - 2}
+        </button>
+      )}
+      {getPageRange(currentPage - 1) && (
+        <button
+          className={` bg-primary opacity-50 text-white px-4 py-2 rounded-full`}
+          onClick={() => handlePage(currentPage - 1)}
+        >
+          {currentPage - 1}
+        </button>
+      )}
+      <h1 className={` bg-primary  text-white px-4 py-2 rounded-full`}>
+        {currentPage}
+      </h1>
+      {getPageRange(currentPage + 1) && (
+        <button
+          className={` bg-primary opacity-50 text-white px-4 py-2 rounded-full`}
+          onClick={() => handlePage(currentPage + 1)}
+        >
+          {currentPage + 1}
+        </button>
+      )}
+      {getPageRange(currentPage + 2) && (
+        <button
+          className={` bg-primary opacity-50 text-white px-4 py-2 rounded-full`}
+          onClick={() => handlePage(currentPage + 2)}
+        >
+          {currentPage + 2}
+        </button>
+      )}
+      <button
+        onClick={handlePagePlus}
+        className="text-primary"
+        disabled={currentPage === maxPage}
+      >
         <IoIosArrowForward />
       </button>
     </div>
