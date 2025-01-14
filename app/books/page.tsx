@@ -176,7 +176,7 @@ const BooksPage = () => {
         </div>
 
         <div
-          className={`absolute  md:top-16 md:right-10 z-50 mt-2 md:w-52 w-64 rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-none transition ease-out duration-100 ${
+          className={`absolute md:top-16 md:right-10 z-50 mt-2 md:w-52 w-64 rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-none transition ease-out duration-100 ${
             menu
               ? "opacity-100 scale-100"
               : "opacity-0 scale-95 pointer-events-none"
@@ -203,11 +203,7 @@ const BooksPage = () => {
         </div>
       </div>
       <div>
-        {loading ? (
-          <div className="flex justify-center py-10">
-            <Loading />
-          </div>
-        ) : books.length > 0 ? (
+        {books.length > 0 ? (
           <>
             <div className="flex justify-center">
               <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-x-10 gap-2 md:px-12 px-5  z-1">

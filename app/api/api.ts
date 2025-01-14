@@ -55,3 +55,23 @@ export const getRowsCount = async (
     return { error: "error fetching data", status: res.status };
   }
 };
+
+export const updateBook = async (
+  id: number,
+  copies: number,
+  availability: boolean
+) => {
+  const res = await axios.post("http://localhost:3001/api/updateBook", {
+    data: {
+      id: id,
+      copies: copies,
+      availability: availability,
+    },
+  });
+
+  if (res.data.success) {
+    window.location.reload();
+  } else {
+    return { error: "error fetching data", status: res.status };
+  }
+};

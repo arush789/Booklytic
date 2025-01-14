@@ -1,12 +1,17 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Books } from "../types";
 import Image from "next/image";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Button, Typography } from "@mui/material";
+import { Button, Skeleton, Typography } from "@mui/material";
 import { Afacad_Flux } from "next/font/google";
+import { useSession } from "next-auth/react";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { updateBook } from "../api/api";
+import fallBackImage from "../../public/Images/imageNotFound.jpg";
 
 const afacad_Flux = Afacad_Flux({ subsets: ["latin"], weight: ["400"] });
 
@@ -17,6 +22,14 @@ const BookModal = ({
   selectedBook: Books;
   setSelectedBook: (book: Books | null) => void;
 }) => {
+  const { data: session } = useSession();
+  const [editModal, setEditModal] = useState<boolean>(false);
+  const [bookCopies, setBookCopies] = useState<number>(selectedBook.copies);
+  const [bookAvailability, setBookAvailabilty] = useState<boolean>(
+    selectedBook.is_available
+  );
+  const [imageLoaded, setImageLoaded] = useState("loading");
+  console.log(bookAvailability);
   return (
     <div>
       <Dialog
@@ -42,7 +55,7 @@ const BookModal = ({
             fontFamily: afacad_Flux.style.fontFamily,
             textAlign: "center",
             fontSize: "1.8rem",
-            padding: "16px 24px",
+            padding: "6px 14px",
           }}
         >
           {selectedBook?.title || "Book Details"}
@@ -55,65 +68,44 @@ const BookModal = ({
           }}
         >
           <div className="flex justify-center mt-4">
+            {imageLoaded === "loading" && (
+              <Skeleton
+                variant="rectangular"
+                width={150}
+                height={200}
+                animation="wave"
+                className="rounded-md"
+              />
+            )}
             <Image
-              src={`https://covers.openlibrary.org/b/isbn/${selectedBook?.isbn}-L.jpg`}
-              width={150}
-              height={200}
-              alt={selectedBook?.title}
-              loading="lazy"
-              style={{
-                borderRadius: "12px",
-                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
-                marginBottom: "16px",
+              src={
+                imageLoaded === "error"
+                  ? fallBackImage
+                  : `https://covers.openlibrary.org/b/isbn/${selectedBook.isbn}-L.jpg?default=false`
+              }
+              width={300}
+              height={300}
+              alt={selectedBook.title}
+              onError={() => {
+                setImageLoaded("error");
               }}
+              loading="lazy"
+              className="rounded-xl w-32 md:w-52"
+              onLoad={() => setImageLoaded("loaded")}
             />
           </div>
-          <Typography
-            variant="body2"
-            sx={{
-              fontFamily: afacad_Flux.style.fontFamily,
-              fontSize: "1.5rem",
-              color: "#555",
-              marginBottom: "16px",
-              lineHeight: "1.6",
-            }}
-          >
-            {/* <strong>Description:</strong>{" "} */}
+          <p className="md:text-xl text-lg my-2">
             {selectedBook?.description || "No description available."}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: afacad_Flux.style.fontFamily,
-              fontSize: "1.5rem",
-              color: "#333",
-              marginBottom: "8px",
-            }}
-          >
+          </p>
+          <p className="md:text-xl text-lg my-2">
             <strong>Author:</strong> {selectedBook?.author || "Unknown"}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: afacad_Flux.style.fontFamily,
-              fontSize: "1.5rem",
-              color: "#333",
-              marginBottom: "8px",
-            }}
-          >
+          </p>
+          <p className="md:text-xl text-lg my-2">
             <strong>Genre:</strong> {selectedBook?.genre || "Unknown"}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: afacad_Flux.style.fontFamily,
-              fontSize: "1.5rem",
-              color: "#333",
-              marginBottom: "8px",
-            }}
-          >
+          </p>
+          <p className="md:text-xl text-lg my-2">
             <strong>Published:</strong> {selectedBook?.published_year || "N/A"}
-          </Typography>
+          </p>
         </DialogContent>
 
         <DialogActions
@@ -123,34 +115,17 @@ const BookModal = ({
             backgroundColor: "#f5f5f5",
           }}
         >
-          {/* <Button
-            variant="outlined"
-            onClick={() => setSelectedBook(null)}
-            sx={{
-              borderRadius: "12px",
-              textTransform: "none",
-              padding: "8px 20px",
-              fontSize: "1rem",
-              fontFamily: afacad_Flux.style.fontFamily,
-
-              "&:hover": {
-                backgroundColor: "#e0e0e0",
-              },
-            }}
-          >
-            Close
-          </Button> */}
           <Button
             variant="contained"
-            fullWidth // Makes the button span the full width
+            fullWidth
             onClick={() => alert("Borrow functionality here")}
             sx={{
               borderRadius: "12px",
               textTransform: "none",
-              padding: "12px 0", // Adjust padding for a taller button
+              letterSpacing: "2px",
+              padding: "8px 0",
               fontFamily: afacad_Flux.style.fontFamily,
               fontSize: "1rem",
-              fontWeight: 600,
               boxShadow: "0 4px 12px #8EB486",
               "&:hover": {
                 backgroundColor: "#115293",
@@ -160,7 +135,105 @@ const BookModal = ({
           >
             Borrow
           </Button>
+          {session?.user?.role === "admin" && (
+            <Button
+              variant="outlined"
+              sx={{
+                borderRadius: "12px",
+                textTransform: "none",
+                padding: "8px 20px",
+                fontSize: "1rem",
+                color: "white",
+                fontFamily: afacad_Flux.style.fontFamily,
+                backgroundColor: "#115293",
+              }}
+              onClick={() => setEditModal(true)}
+            >
+              Edit
+            </Button>
+          )}
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={editModal}
+        onClose={() => setEditModal(false)}
+        aria-labelledby="book-modal-title"
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: "20px",
+            backgroundColor: "#ffffff",
+            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <DialogContent
+          sx={{
+            padding: "24px",
+            textAlign: "center",
+          }}
+        >
+          <div className="flex flex-col items-start gap-3 ">
+            <h1 className="text-xl font-bold">Copies</h1>
+            <div className="bg-slate-300 flex rounded-lg gap-x-4 ">
+              <button
+                className="bg-red-400 text-white p-2 rounded-l-lg"
+                onClick={() => {
+                  if (bookCopies > 0) {
+                    setBookCopies(bookCopies - 1);
+                  }
+                }}
+              >
+                <FaMinus />
+              </button>
+              <div className="flex items-center">
+                <h1 className="text-xl">{bookCopies}</h1>
+              </div>
+              <button
+                className="bg-green-700 text-white p-2 rounded-r-lg"
+                onClick={() => setBookCopies(bookCopies + 1)}
+              >
+                <FaPlus />
+              </button>
+            </div>
+            <h1 className="text-xl font-bold">Issue status</h1>
+            <label
+              htmlFor="check"
+              className={`${
+                bookAvailability ? "bg-green-500" : "bg-red-500"
+              } rounded-full w-16 h-8 relative transition-colors duration-300`}
+            >
+              <input
+                type="checkbox"
+                id="check"
+                className="peer sr-only"
+                checked={bookAvailability}
+                onChange={() => setBookAvailabilty(!bookAvailability)}
+              />
+              <span className="left-1 top-1 bg-white w-2/5 h-4/5 absolute rounded-full peer-checked:left-[34px] transition-all duration-100"></span>
+            </label>
+            <div className="w-full mt-5">
+              <button
+                className="bg-green-600 text-white p-2 rounded-xl w-full"
+                onClick={() =>
+                  updateBook(
+                    selectedBook.id,
+                    bookCopies,
+                    bookCopies == 0
+                      ? false
+                      : bookCopies > 0
+                      ? true
+                      : bookAvailability
+                  )
+                }
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </DialogContent>
       </Dialog>
     </div>
   );
