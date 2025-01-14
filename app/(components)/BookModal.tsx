@@ -4,9 +4,11 @@ import Image from "next/image";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { Afacad_Flux } from "next/font/google";
+
+const afacad_Flux = Afacad_Flux({ subsets: ["latin"], weight: ["400"] });
 
 const BookModal = ({
   selectedBook,
@@ -18,185 +20,148 @@ const BookModal = ({
   return (
     <div>
       <Dialog
-        open={selectedBook !== null}
-        onClose={
-          selectedBook === null ? undefined : () => setSelectedBook(null)
-        }
-        aria-labelledby="responsive-dialog-title"
-        maxWidth="md"
+        open={!!selectedBook}
+        onClose={() => setSelectedBook(null)}
+        aria-labelledby="book-modal-title"
+        maxWidth="sm"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: "20px",
-            backgroundColor: "#f9f9f9",
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#ffffff",
+            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+            overflow: "hidden",
           },
         }}
       >
-        <DialogContent>
-          <div className="w-full justify-center flex ">
-            <Image
-              src={`https://covers.openlibrary.org/b/isbn/${selectedBook.isbn}-L.jpg`}
-              width={150}
-              height={200}
-              alt={selectedBook.title}
-              loading="lazy"
-              className="rounded-xl"
-            />
-          </div>
-        </DialogContent>
         <DialogTitle
-          id="responsive-dialog-title"
+          id="book-modal-title"
           sx={{
-            fontSize: "2rem",
-            fontWeight: 600,
+            background: "linear-gradient(to right, #9cb486, #8EB486)",
+            color: "#fff",
+            fontFamily: afacad_Flux.style.fontFamily,
             textAlign: "center",
-            color: "#333",
-            paddingBottom: 2,
+            fontSize: "1.8rem",
+            padding: "16px 24px",
           }}
         >
-          {selectedBook ? selectedBook.title : "Book Information"}
+          {selectedBook?.title || "Book Details"}
         </DialogTitle>
 
-        <DialogContent>
-          <DialogContentText
+        <DialogContent
+          sx={{
+            padding: "24px",
+            textAlign: "center",
+          }}
+        >
+          <div className="flex justify-center mt-4">
+            <Image
+              src={`https://covers.openlibrary.org/b/isbn/${selectedBook?.isbn}-L.jpg`}
+              width={150}
+              height={200}
+              alt={selectedBook?.title}
+              loading="lazy"
+              style={{
+                borderRadius: "12px",
+                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
+                marginBottom: "16px",
+              }}
+            />
+          </div>
+          <Typography
+            variant="body2"
             sx={{
-              fontSize: "1.1rem",
+              fontFamily: afacad_Flux.style.fontFamily,
+              fontSize: "1.5rem",
               color: "#555",
-              lineHeight: 1.6,
+              marginBottom: "16px",
+              lineHeight: "1.6",
             }}
           >
-            <strong>Author:</strong> {selectedBook?.author}
-          </DialogContentText>
-          <DialogContentText
+            {/* <strong>Description:</strong>{" "} */}
+            {selectedBook?.description || "No description available."}
+          </Typography>
+          <Typography
+            variant="body1"
             sx={{
-              fontSize: "1.1rem",
-              color: "#555",
-              lineHeight: 1.6,
+              fontFamily: afacad_Flux.style.fontFamily,
+              fontSize: "1.5rem",
+              color: "#333",
+              marginBottom: "8px",
             }}
           >
-            <strong>Genre:</strong> {selectedBook?.genre}
-          </DialogContentText>
-          <DialogContentText
+            <strong>Author:</strong> {selectedBook?.author || "Unknown"}
+          </Typography>
+          <Typography
+            variant="body1"
             sx={{
-              fontSize: "1.1rem",
-              color: "#555",
-              lineHeight: 1.6,
+              fontFamily: afacad_Flux.style.fontFamily,
+              fontSize: "1.5rem",
+              color: "#333",
+              marginBottom: "8px",
             }}
           >
-            <strong>Published Year:</strong> {selectedBook?.published_year}
-          </DialogContentText>
-
-          <DialogContentText
+            <strong>Genre:</strong> {selectedBook?.genre || "Unknown"}
+          </Typography>
+          <Typography
+            variant="body1"
             sx={{
-              fontSize: "1rem",
-              color: "#777",
-              marginTop: 2,
-              lineHeight: 1.6,
+              fontFamily: afacad_Flux.style.fontFamily,
+              fontSize: "1.5rem",
+              color: "#333",
+              marginBottom: "8px",
             }}
           >
-            <strong>Description:</strong> {selectedBook?.description}
-          </DialogContentText>
-
-          <DialogContentText
-            sx={{
-              fontSize: "1.1rem",
-              color: "#555",
-              lineHeight: 1.6,
-              marginTop: 3,
-            }}
-          >
-            <strong>Copies Available:</strong> {selectedBook?.copies}
-          </DialogContentText>
+            <strong>Published:</strong> {selectedBook?.published_year || "N/A"}
+          </Typography>
         </DialogContent>
 
         <DialogActions
-          sx={{ padding: "16px 24px", justifyContent: "space-between" }}
+          sx={{
+            padding: "16px 24px",
+            justifyContent: "center",
+            backgroundColor: "#f5f5f5",
+          }}
         >
-          <Button
+          {/* <Button
             variant="outlined"
-            color="error"
             onClick={() => setSelectedBook(null)}
             sx={{
               borderRadius: "12px",
               textTransform: "none",
               padding: "8px 20px",
-              fontWeight: 600,
               fontSize: "1rem",
+              fontFamily: afacad_Flux.style.fontFamily,
+
               "&:hover": {
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#e0e0e0",
               },
             }}
           >
             Close
-          </Button>
+          </Button> */}
           <Button
             variant="contained"
-            color="primary"
+            fullWidth // Makes the button span the full width
             onClick={() => alert("Borrow functionality here")}
             sx={{
               borderRadius: "12px",
               textTransform: "none",
-              padding: "8px 20px",
-              fontWeight: 600,
+              padding: "12px 0", // Adjust padding for a taller button
+              fontFamily: afacad_Flux.style.fontFamily,
               fontSize: "1rem",
+              fontWeight: 600,
+              boxShadow: "0 4px 12px #8EB486",
               "&:hover": {
-                backgroundColor: "#1976d2",
+                backgroundColor: "#115293",
               },
+              backgroundColor: "#8EB486",
             }}
           >
             Borrow
           </Button>
         </DialogActions>
       </Dialog>
-      {/* <div className="w-full justify-center flex mb-6">
-        <Image
-          src={`https://covers.openlibrary.org/b/isbn/${selectedBook.isbn}-L.jpg`}
-          width={150}
-          height={200}
-          alt={selectedBook.title}
-          loading="lazy"
-          className="rounded-xl"
-        />
-      </div>
-      <div className="text-center mb-6">
-        <h1 className="text-4xl font-semibold text-gray-800">
-          {selectedBook.title}
-        </h1>
-        <p className="text-xl text-gray-600 mt-2">
-          <strong className="font-medium">Author:</strong> {selectedBook.author}
-        </p>
-        <p className="text-xl text-gray-600">
-          <strong className="font-medium">Genre:</strong> {selectedBook.genre}
-        </p>
-        <p className="text-xl text-gray-600">
-          <strong className="font-medium">Published Year:</strong>{" "}
-          {selectedBook.published_year}
-        </p>
-      </div>
-      <div className="mb-6">
-        <p className="text-gray-600">
-          <strong className="font-medium">Description:</strong>{" "}
-          {selectedBook.description}
-        </p>
-      </div>
-      <div className=" absolute top-4 left-4 p-2 rounded-xl bg-green-200 text-white">
-        <h2 className="text-xl text-gray-800">
-          <strong className="font-medium">Available : </strong>{" "}
-          {selectedBook.copies}
-        </h2>
-      </div>
-      <div className="flex gap-6 mt-8">
-        <button
-          className="bg-gray-300 text-gray-800 py-3 px-6 rounded-xl w-full hover:bg-gray-400 transition-all duration-300 transform hover:scale-105"
-          onClick={() => setSelectedBook(null)}
-        >
-          Close
-        </button>
-        <button className="bg-blue-600 text-white py-3 px-6 rounded-xl w-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
-          Borrow
-        </button>
-      </div> */}
     </div>
   );
 };

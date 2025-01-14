@@ -8,6 +8,7 @@ import BooksCard from "../(components)/BooksCard";
 import Pagination from "../(components)/Pagination";
 import { getBooks, getGenre, getRowsCount } from "../api/api";
 import { Books } from "../types";
+import Loading from "../(components)/Loading";
 
 const afacad_Flux = Afacad_Flux({ subsets: ["latin"] });
 
@@ -22,17 +23,18 @@ const BooksPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const searchInputRef = useRef<string>("");
   const [searchTrigger, setSearchTrigger] = useState<boolean>(true);
+  const [hoverStyles, setHoverStyles] = useState<{
+    [key: number]: React.CSSProperties;
+  }>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const menuToggle = () => {
     setMenu(!menu);
   };
 
-  const [hoverStyles, setHoverStyles] = useState<{
-    [key: number]: React.CSSProperties;
-  }>({});
-
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true);
       const books = await getBooks(
         postsPerPage,
         currentPage,
@@ -44,6 +46,7 @@ const BooksPage = () => {
           setBooks(books.data as Books[]);
         }
       }
+      setLoading(false);
     };
 
     const fecthRowsCount = async () => {
@@ -100,8 +103,8 @@ const BooksPage = () => {
       [bookId]: { transformOrigin: `${x}px ${y}px` },
     }));
   };
+
   const handleSearch = async () => {
-    console.log(searchInputRef.current);
     setSearchTrigger(!searchTrigger);
   };
 
@@ -200,19 +203,26 @@ const BooksPage = () => {
         </div>
       </div>
       <div>
-        {books.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center py-10">
+            <Loading />
+          </div>
+        ) : books.length > 0 ? (
           <>
-            <div className="md:grid md:grid-cols-3 flex flex-wrap md:gap-x-10 gap-2 md:px-12 px-5 justify-center z-1">
-              {books.map((book) => (
-                <BooksCard
-                  key={book.id}
-                  book={book}
-                  handleMouseMove={handleMouseMove}
-                  handleMouseLeave={handleMouseLeave}
-                  hoverStyles={hoverStyles}
-                  setSelectedBook={setSelectedBook}
-                />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-x-10 gap-2 md:px-12 px-5  z-1">
+                {books.map((book) => (
+                  <BooksCard
+                    key={book.id}
+                    book={book}
+                    handleMouseMove={handleMouseMove}
+                    handleMouseLeave={handleMouseLeave}
+                    hoverStyles={hoverStyles}
+                    setSelectedBook={setSelectedBook}
+                    loading={loading}
+                  />
+                ))}
+              </div>
             </div>
             <div className="flex justify-center">
               <Pagination

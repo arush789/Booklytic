@@ -30,6 +30,7 @@ export type BooksCardProps = {
     [key: number]: React.CSSProperties;
   };
   setSelectedBook: (book: Books) => void;
+  loading: boolean;
 };
 
 export type AdminDataProps = {
