@@ -29,7 +29,7 @@ const BooksCard: React.FC<BooksCardProps> = ({
       ></div>
 
       <div className="relative z-10 h-72 flex gap-4">
-        <div className="md:w-52  w-[50%] overflow-hidden">
+        <div className="md:w-62  w-[50%] overflow-hidden">
           {imageLoaded === "loading" && (
             <Skeleton
               variant="rectangular"
@@ -72,7 +72,7 @@ const BooksCard: React.FC<BooksCardProps> = ({
           </div>
         ) : (
           <>
-            <div className="flex flex-col gap-2 md:p-5 py-5  w-[50%] ">
+            <div className="flex flex-col gap-2 md:p-5 py-5  md:w-full w-[50%] ">
               <h2 className="text-black font-bold md:text-3xl text-xl ">
                 {book.title}{" "}
                 <span className="text-gray-400">({book.published_year})</span>
@@ -87,7 +87,7 @@ const BooksCard: React.FC<BooksCardProps> = ({
                 <strong>Genre:</strong> {book.genre}
               </p>
               {book.is_available ? (
-                <div className="absolute right-4 bottom-4 bg-green-400 px-2 rounded-lg w-32 flex justify-center">
+                <div className="absolute right-4 bottom-4 bg-green-600 px-2 rounded-lg w-32 flex justify-center">
                   <h1 className="text-lg">{book.copies} Available </h1>
                 </div>
               ) : (

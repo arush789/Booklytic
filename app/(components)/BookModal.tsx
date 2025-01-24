@@ -71,20 +71,21 @@ const BookModal = ({
             {imageLoaded === "loading" && (
               <Skeleton
                 variant="rectangular"
-                width={150}
-                height={200}
+                width={200}
+                height={300}
                 animation="wave"
-                className="rounded-md"
+                className="rounded-xl w-32 md:w-52"
               />
             )}
+
             <Image
               src={
                 imageLoaded === "error"
                   ? fallBackImage
                   : `https://covers.openlibrary.org/b/isbn/${selectedBook.isbn}-L.jpg?default=false`
               }
-              width={300}
-              height={300}
+              width={3000}
+              height={3000}
               alt={selectedBook.title}
               onError={() => {
                 setImageLoaded("error");
@@ -177,9 +178,9 @@ const BookModal = ({
         >
           <div className="flex flex-col items-start gap-3 ">
             <h1 className="text-xl font-bold">Copies</h1>
-            <div className="bg-slate-300 flex rounded-lg gap-x-4 ">
+            <div className="bg-slate-300 flex rounded-full gap-x-4 ">
               <button
-                className="bg-red-400 text-white p-2 rounded-l-lg"
+                className="bg-red-400 text-white p-2 rounded-full"
                 onClick={() => {
                   if (bookCopies > 0) {
                     setBookCopies(bookCopies - 1);
@@ -192,7 +193,7 @@ const BookModal = ({
                 <h1 className="text-xl">{bookCopies}</h1>
               </div>
               <button
-                className="bg-green-700 text-white p-2 rounded-r-lg"
+                className="bg-green-600 text-white p-2 rounded-full"
                 onClick={() => setBookCopies(bookCopies + 1)}
               >
                 <FaPlus />
@@ -212,21 +213,13 @@ const BookModal = ({
                 checked={bookAvailability}
                 onChange={() => setBookAvailabilty(!bookAvailability)}
               />
-              <span className="left-1 top-1 bg-white w-2/5 h-4/5 absolute rounded-full peer-checked:left-[34px] transition-all duration-100"></span>
+              <span className="left-1 top-[3px] bg-white w-2/5 h-4/5 absolute rounded-full peer-checked:left-[34px] transition-all duration-100"></span>
             </label>
             <div className="w-full mt-5">
               <button
                 className="bg-green-600 text-white p-2 rounded-xl w-full"
                 onClick={() =>
-                  updateBook(
-                    selectedBook.id,
-                    bookCopies,
-                    bookCopies == 0
-                      ? false
-                      : bookCopies > 0
-                      ? true
-                      : bookAvailability
-                  )
+                  updateBook(selectedBook.id, bookCopies, bookAvailability)
                 }
               >
                 Save

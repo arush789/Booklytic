@@ -11,15 +11,17 @@ import { GoHome } from "react-icons/go";
 import { ImBooks } from "react-icons/im";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
+import Loading from "./Loading";
+import { Skeleton } from "@mui/material";
 
 const afacad_Flux = Afacad_Flux({ subsets: ["latin"] });
 const Nav = () => {
   const path = usePathname();
   const [menuClass, setMenuClass] = useState("mob-header-menu");
 
-  const { data: session } = useSession({
-    required: false,
-  });
+  const { data: session, status } = useSession();
+
+  const isLoading = status === "loading";
 
   function handleMenuToggle() {
     setMenuClass((prevClass) =>
@@ -117,7 +119,7 @@ const Nav = () => {
               </div>
 
               <div className="group relative px-3 cursor-pointer">
-                <Link href="/admin">
+                <Link href="/admin/dashboard">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                     <RiAdminFill size={24} color="black" />
                   </div>
@@ -132,7 +134,15 @@ const Nav = () => {
 
         <div className="flex justify-end  gap-x-2">
           <div className="items-center flex  ">
-            {session ? (
+            {isLoading ? (
+              <div className="flex w-52 gap-2 items-center">
+                <Skeleton variant="circular" width={80} height={60} />
+                <div className="flex flex-col w-52">
+                  <Skeleton />
+                  <Skeleton />
+                </div>
+              </div>
+            ) : session ? (
               <Link href="/api/auth/signout?callbackUrl=/">
                 <Image
                   src={session?.user?.image as string}

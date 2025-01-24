@@ -7,8 +7,8 @@ import Link from "next/link";
 const AdminPage = ({ children }: AdminDataProps) => {
   return (
     <div className="px-5">
-      <div className="bg-white p-5 shadow-md shadow-purple-200/50 rounded-xl  flex">
-        <div className="card w-72 bg-primary p-5 shadow-md shadow-purple-200/50 rounded-xl border-2 border-primary">
+      <div className="bg-white md:p-5 shadow-md shadow-purple-200/50 rounded-xl flex">
+        <div className="card w-72 bg-primary p-5 shadow-md shadow-purple-200/50 rounded-xl border-2 border-primary hidden md:block">
           <ul className="w-full flex flex-col gap-2">
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link
@@ -21,11 +21,11 @@ const AdminPage = ({ children }: AdminDataProps) => {
             </li>
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
               <Link
-                href={"/admin/create"}
+                href={"/admin/users"}
                 className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-xl bg-cover hover:bg-purple-100 hover:shadow-inner   focus:text-black text-gray-700 transition-all ease-linear"
               >
                 <CiCirclePlus className="size-7" />
-                Create User
+                Users
               </Link>
             </li>
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
@@ -39,16 +39,7 @@ const AdminPage = ({ children }: AdminDataProps) => {
             </li>
           </ul>
         </div>
-        <div>
-          <main className=" p-8 ">
-            <header className="flex justify-between items-center mb-8">
-              <h1 className="text-3xl font-semibold text-gray-700">
-                Welcome, Admin
-              </h1>
-            </header>
-          </main>
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   );

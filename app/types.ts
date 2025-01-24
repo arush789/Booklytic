@@ -4,6 +4,14 @@ export type UserType = {
   role: "member" | "admin";
 };
 
+export type UserManagementType = {
+  id: number;
+  email: string;
+  name: string;
+  membership_date: Date;
+  role: "member" | "admin";
+};
+
 export type Books = {
   author: string;
   copies: number;
