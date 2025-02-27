@@ -42,7 +42,7 @@ const Nav = () => {
           </h1>
         </div>
 
-        <div className="justify-center flex h-full items-center flex-1 pr-10">
+        <div className="justify-center flex h-full items-center flex-1 ">
           {/* <ul className="flex space-x-10">
             <li className="relative cursor-pointer group text-xl text-black">
               <Link href={"/"}>

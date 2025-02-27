@@ -78,58 +78,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="px-5 py-3">
-        <div className="bg-black w-full p-10 rounded-2xl ">
-          <div className="flex justify-center w-full">
-            <h1 className="text-4xl font text-center mb-10">Popular Books</h1>
-          </div>
-          <div className="flex flex-wrap gap-6 justify-center">
-            <div className="bg-[#F0F0F0] p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                The Great Adventure
-              </h3>
-              <p className="text-gray-600 text-base mb-3">
-                A thrilling journey of discovery, filled with challenges and
-                mysteries.
-              </p>
-              <p className="text-gray-500 mb-3">Author: John Doe</p>
-              <p className="text-gray-500 mb-3">Genre: Adventure, Mystery</p>
-              <a href="#" className="text-blue-600 font-semibold">
-                Read More
-              </a>
-            </div>
-
-            <div className="bg-[#F0F0F0] p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                Wisdom Beyond Time
-              </h3>
-              <p className="text-gray-600 text-base mb-3">
-                Timeless knowledge that will guide you through every stage of
-                life.
-              </p>
-              <p className="text-gray-500 mb-3">Author: Jane Smith</p>
-              <p className="text-gray-500 mb-3">Genre: Philosophy, Self-Help</p>
-              <a href="#" className="text-blue-600 font-semibold">
-                Read More
-              </a>
-            </div>
-            <div className="bg-[#F0F0F0] p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                The Secret of Success
-              </h3>
-              <p className="text-gray-600 text-base mb-3">
-                Unlock the hidden strategies that lead to lasting success and
-                fulfillment.
-              </p>
-              <p className="text-gray-500 mb-3">Author: Michael Lee</p>
-              <p className="text-gray-500 mb-3">Genre: Business, Motivation</p>
-              <a href="#" className="text-blue-600 font-semibold">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

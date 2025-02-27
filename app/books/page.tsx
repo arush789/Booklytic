@@ -16,7 +16,7 @@ const BooksPage = () => {
   const [books, setBooks] = useState<Books[]>([]);
   const [selectedBook, setSelectedBook] = useState<Books | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const postsPerPage = 9;
+  const postsPerPage = 12;
   const [maxPage, setMaxPage] = useState<number>(0);
   const [menu, setMenu] = useState<boolean>(false);
   const [genre, setGenre] = useState<{ genre: string }[]>([]);
@@ -35,16 +35,14 @@ const BooksPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       setLoading(true);
-      const books = await getBooks(
+      const booksResponse = await getBooks(
         postsPerPage,
         currentPage,
         selectedFilter,
         searchInputRef.current
       );
-      if (books.status === 200) {
-        if ("data" in books) {
-          setBooks(books.data as Books[]);
-        }
+      if (booksResponse.status === 200 && "data" in booksResponse) {
+        setBooks(booksResponse.data as Books[]);
       }
       setLoading(false);
     };
@@ -61,9 +59,9 @@ const BooksPage = () => {
     };
 
     const fetchGenre = async () => {
-      const genre = await getGenre();
-      if (genre.status === 200) {
-        setGenre(genre.data);
+      const genreResponse = await getGenre();
+      if (genreResponse.status === 200) {
+        setGenre(genreResponse.data);
       }
     };
 
@@ -203,10 +201,14 @@ const BooksPage = () => {
         </div>
       </div>
       <div>
-        {books.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center">
+            <Loading />
+          </div>
+        ) : books.length > 0 ? (
           <>
             <div className="flex justify-center">
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-x-10 gap-2 md:px-12 px-5  z-1">
+              <div className="grid lg:grid-cols-6 md:grid-cols-2 grid-cols-1 md:gap-x-10 gap-5 md:px-12 px-5  z-1">
                 {books.map((book) => (
                   <BooksCard
                     key={book.id}
@@ -228,11 +230,11 @@ const BooksPage = () => {
               />
             </div>
           </>
-        ) : (
-          <div className=" flex justify-center">
-            <h1 className="text-2xl text-black">No Books Found</h1>
+        ) : !loading && books.length === 0 ? (
+          <div className="flex justify-center">
+            <h1>No books found</h1>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

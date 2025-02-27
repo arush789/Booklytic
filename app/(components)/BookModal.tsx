@@ -67,14 +67,14 @@ const BookModal = ({
             textAlign: "center",
           }}
         >
-          <div className="flex justify-center mt-4">
-            {imageLoaded === "loading" && (
+          <div className="flex justify-center mt-4 relative">
+            {imageLoaded !== "loaded" && (
               <Skeleton
                 variant="rectangular"
                 width={200}
                 height={300}
                 animation="wave"
-                className="rounded-xl w-32 md:w-52"
+                className="absolute rounded-xl w-32 md:w-52"
               />
             )}
 
@@ -87,14 +87,15 @@ const BookModal = ({
               width={3000}
               height={3000}
               alt={selectedBook.title}
-              onError={() => {
-                setImageLoaded("error");
-              }}
+              onError={() => setImageLoaded("error")}
               loading="lazy"
-              className="rounded-xl w-32 md:w-52"
+              className={`rounded-xl w-32 md:w-52 transition-opacity duration-300 ${
+                imageLoaded === "loading" ? "opacity-0" : "opacity-100"
+              }`}
               onLoad={() => setImageLoaded("loaded")}
             />
           </div>
+
           <p className="md:text-xl text-lg my-2">
             {selectedBook?.description || "No description available."}
           </p>
